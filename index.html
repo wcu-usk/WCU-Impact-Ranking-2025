@@ -204,9 +204,58 @@
         .hidden {
             display: none !important;
         }
+        /* Tutorial Styles */
+        #tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.7); /* Slate-900 with opacity */
+            z-index: 99;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #tutorial-modal {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 101;
+        }
+        .tutorial-icon {
+            display: inline-flex;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+            background-color: #f1f5f9;
+            border-radius: 0.25rem;
+            padding: 0.2rem;
+        }
+        .tutorial-icon svg{
+            width: 20px;
+            height: 20px;
+        }
     </style>
 </head>
 <body class="p-4 sm:p-8">
+
+    <div id="tutorial-overlay" class="hidden">
+        <div id="tutorial-modal">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4">Quick Guide</h2>
+            <ul class="space-y-4 text-slate-600 mb-8">
+                <li><strong>Navigation:</strong> Use the <strong>Previous/Next</strong> buttons or the <strong>Slide X of Y</strong> dropdown to move between slides.</li>
+                <li><strong>Toolbar:</strong> Click the <span class="tutorial-icon"><svg id="chevron-right" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></span> button to hide or show the annotation tools.</li>
+                <li><span class="tutorial-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg></span> <strong>Pen:</strong> Draw on the slide. Click the colored circles to change colors.</li>
+                <li><span class="tutorial-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21.73 6.27l-4-4a2 2 0 00-2.83 0l-12 12a2 2 0 000 2.83l4 4a2 2 0 002.83 0l12-12a2 2 0 000-2.83z"></path><path d="M4.93 14.93l4.14 4.14"></path></svg></span> <strong>Eraser:</strong> Remove parts of your drawings.</li>
+                <li><span class="tutorial-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg></span> <strong>Clear All:</strong> Wipes all drawings from the current slide.</li>
+            </ul>
+            <button id="tutorial-close" class="nav-btn w-full">Got it!</button>
+        </div>
+    </div>
 
     <div class="max-w-7xl mx-auto bg-white p-4 sm:p-6 rounded-2xl shadow-xl presentation-container">
         
@@ -535,7 +584,7 @@
                                     <tr><td class="usk-sdg-col">SDG 4: Quality Education</td><td class="usk-rank-col">=66</td><td class="usk-highlight-rank">#4</td></tr>
                                     <tr><td class="usk-sdg-col">SDG 5: Gender Equality</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
                                     <tr><td class="usk-sdg-col">SDG 6: Clean Water & Sanitation</td><td class="usk-rank-col">-</td><td>-</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 7: Affordable & Clean Energy</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
+                                    <tr><td class="sdg-col">SDG 7: Affordable & Clean Energy</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
                                     <tr><td class="sdg-col">SDG 8: Decent Work & Economic Growth</td><td class="usk-rank-col">-</td><td>-</td></tr>
                                     <tr><td class="sdg-col">SDG 9: Industry, Innovation & Infrastructure</td><td class="usk-rank-col">401-600</td><td>#11</td></tr>
                                     <tr><td class="sdg-col">SDG 10: Reduced Inequalities</td><td class="usk-rank-col">601-800</td><td>#12</td></tr>
@@ -575,6 +624,19 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- TUTORIAL LOGIC ---
+            const tutorialOverlay = document.getElementById('tutorial-overlay');
+            const tutorialCloseBtn = document.getElementById('tutorial-close');
+
+            if (!localStorage.getItem('hasSeenSimpleTutorial')) {
+                tutorialOverlay.classList.remove('hidden');
+            }
+
+            tutorialCloseBtn.addEventListener('click', () => {
+                tutorialOverlay.classList.add('hidden');
+                localStorage.setItem('hasSeenSimpleTutorial', 'true');
+            });
+            
             // --- DOM Element Selection ---
             const slides = document.querySelectorAll('.slide');
             const prevBtn = document.getElementById('prevBtn');
