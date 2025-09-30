@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indonesian Universities - THE Impact Rankings 2025 by SDG</title>
-    <link rel="icon" type="img" href="img/logo/favicon.ico">
+    <link rel="icon" type="image/png" href="img/logo/favicon.ico">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,6 +12,9 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f1f5f9; /* Slate-100 */
+        }
+        .presentation-container {
+            position: relative; /* Needed for canvas overlay */
         }
         .slide {
             display: none;
@@ -22,6 +25,63 @@
         .slide.active {
             display: flex;
             flex-direction: column;
+        }
+        #drawing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Initially disabled */
+            z-index: 10;
+        }
+        .toolbar {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 20;
+        }
+        #tools-wrapper {
+            display: flex;
+            gap: 0.5rem;
+            transition: max-width 0.4s ease-in-out, opacity 0.3s ease-in-out 0.1s;
+            max-width: 200px;
+            opacity: 1;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        #tools-wrapper.hidden {
+            max-width: 0;
+            opacity: 0;
+            transition: max-width 0.4s ease-in-out, opacity 0.2s ease-in-out;
+        }
+        .tool-btn {
+            padding: 0.5rem;
+            border: 2px solid transparent;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0; /* Prevent buttons from shrinking */
+        }
+        .tool-btn:hover {
+            background-color: #e2e8f0; /* Slate-200 */
+        }
+        .tool-btn.active {
+            border-color: #0284c7; /* Sky-600 */
+            background-color: #e0f2fe; /* Sky-100 */
+        }
+        .tool-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+        #toggle-toolbar-btn {
+            margin-left: 0.5rem;
         }
         .table-header {
             background-color: #1e293b; /* Slate-800 */
@@ -34,12 +94,12 @@
             text-align: center;
             font-size: 0.875rem;
         }
-        .sdg-col {
+        .sdg-col, .usk-sdg-col {
             text-align: left;
             width: 30%;
             font-weight: 500;
         }
-        .rank-col {
+        .rank-col, .usk-rank-col {
             width: 14%;
         }
         .nav-btn {
@@ -49,7 +109,7 @@
             border-radius: 0.5rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color: 0.3s;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .nav-btn:hover {
@@ -58,6 +118,27 @@
         .nav-btn:disabled {
             background-color: #94a3b8; /* Slate-400 */
             cursor: not-allowed;
+        }
+        #slide-jumper {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding: 0.6rem 2.5rem 0.6rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db; /* gray-300 */
+            font-weight: 600;
+            color: #4b5563; /* gray-600 */
+            cursor: pointer;
+            text-align: center;
+        }
+        #slide-jumper:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            border-color: #3b82f6; /* blue-500 */
         }
         .slide-footer {
             position: absolute;
@@ -76,7 +157,7 @@
             width: auto;
             object-fit: contain;
         }
-        /* Styles for USK slide */
+        /* Styles for USK specific elements */
         .usk-table-header {
             background-color: #006837; /* USK Green */
         }
@@ -102,7 +183,35 @@
 </head>
 <body class="p-4 sm:p-8">
 
-    <div class="max-w-7xl mx-auto bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
+    <div class="max-w-7xl mx-auto bg-white p-4 sm:p-6 rounded-2xl shadow-xl presentation-container">
+        
+        <!-- Drawing Canvas & Toolbar -->
+        <div class="toolbar">
+            <div id="tools-wrapper">
+                <button id="cursor-tool" class="tool-btn active" title="Cursor Tool">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5" /></svg>
+                </button>
+                <button id="pen-tool" class="tool-btn" title="Pen Tool">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg>
+                </button>
+                <button id="eraser-tool" class="tool-btn" title="Eraser Tool">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.28183 21.0001L20.2527 9.02921C21.2287 8.05322 21.2287 6.47129 20.2527 5.4953L18.5048 3.74737C17.5288 2.77138 15.9469 2.77138 14.9709 3.74737L3.00002 15.7183L8.28183 21.0001Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 15.7188L8.2818 21.0006" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12.9996 5.71912L18.2814 11.0009" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                 <button id="clear-tool" class="tool-btn" title="Clear All">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+                </button>
+            </div>
+            <button id="toggle-toolbar-btn" class="tool-btn" title="Toggle Tools">
+                <svg id="chevron-right" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+                <svg id="chevron-left" class="hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+            </button>
+        </div>
+        <canvas id="drawing-canvas"></canvas>
+        
         <!-- Slides Container -->
         <div id="slides-container">
             
@@ -164,6 +273,7 @@
                 </div>
             </div>
 
+            <!-- Slides 3 to 9 are unchanged and should be placed here -->
             <!-- Slide 3: SDG Ranks 1-5 -->
             <div class="slide p-2 sm:p-4">
                  <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Peringkat SDG: Universitas 1-5</h2>
@@ -197,9 +307,7 @@
                     </table>
                  </div>
             </div>
-            
-            <!-- Slide 4 -->
-             <div class="slide p-2 sm:p-4">
+            <div class="slide p-2 sm:p-4">
                  <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Peringkat SDG: Universitas 6-10</h2>
                  <div class="overflow-x-auto">
                     <table class="w-full border-collapse alternating-rows min-w-[600px]">
@@ -231,7 +339,6 @@
                     </table>
                  </div>
             </div>
-            <!-- Slide 5 -->
             <div class="slide p-2 sm:p-4">
                  <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Peringkat SDG: Universitas 11-15</h2>
                  <div class="overflow-x-auto">
@@ -264,7 +371,6 @@
                     </table>
                  </div>
             </div>
-            <!-- Slide 6 -->
              <div class="slide p-2 sm:p-4">
                  <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Peringkat SDG: Universitas 16-20</h2>
                  <div class="overflow-x-auto">
@@ -297,8 +403,6 @@
                     </table>
                  </div>
             </div>
-            
-            <!-- Slide 7: USK Highlights -->
             <div class="slide p-8 justify-center">
                  <h2 class="text-3xl font-bold text-center mb-8 text-slate-800">Highlight dan Kesimpulan Utama: <span style="color: #006837;">Universitas Syiah Kuala (USK)</span></h2>
                 <ul class="space-y-5 text-slate-700 text-lg max-w-4xl mx-auto">
@@ -308,8 +412,6 @@
                      <li class="flex items-start"><span class="text-yellow-500 text-2xl mr-4">&#9733;</span><div><span class="font-semibold text-slate-800">Komitmen Kemitraan yang Kuat:</span> Peringkat tinggi dalam <strong>SDG 17: Kemitraan untuk Tujuan</strong> (peringkat #5 Nasional) menunjukkan kemampuan USK dalam menjalin kolaborasi untuk mencapai tujuan keberlanjutan.</div></li>
                 </ul>
             </div>
-
-            <!-- Slide 8: USK Strength Map -->
             <div class="slide p-4 justify-center">
                  <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Peta Kekuatan SDG Universitas Syiah Kuala</h2>
                  <p class="text-center text-slate-500 mb-6">Visualisasi Peringkat Nasional USK di setiap Kategori SDG.</p>
@@ -379,8 +481,6 @@
                     </div>
                  </div>
             </div>
-
-            <!-- Slide 9: USK Profile -->
             <div class="slide p-4">
                 <div class="text-center mb-8">
                     <h1 class="text-3xl md:text-4xl font-bold text-slate-800 mb-2">Profil Peringkat Universitas Syiah Kuala (USK)</h1>
@@ -408,7 +508,7 @@
                                     <tr><td class="usk-sdg-col">SDG 7: Affordable & Clean Energy</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
                                     <tr><td class="usk-sdg-col">SDG 8: Decent Work & Economic Growth</td><td class="usk-rank-col">-</td><td>-</td></tr>
                                     <tr><td class="usk-sdg-col">SDG 9: Industry, Innovation & Infrastructure</td><td class="usk-rank-col">401-600</td><td>#11</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 10: Reduced Inequalities</td><td class="usk-rank-col">601-800</td><td>#12</td></tr>
+                                    <tr><td class="sdg-col">SDG 10: Reduced Inequalities</td><td class="usk-rank-col">601-800</td><td>#12</td></tr>
                                     <tr><td class="usk-sdg-col">SDG 11: Sustainable Cities & Communities</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
                                     <tr><td class="usk-sdg-col">SDG 12: Responsible Consumption & Production</td><td class="usk-rank-col">-</td><td>-</td></tr>
                                     <tr><td class="sdg-col">SDG 13: Climate Action</td><td class="usk-rank-col">101-200</td><td>#7</td></tr>
@@ -425,46 +525,147 @@
                         <div class="space-y-4 text-slate-600">
                             <div><p class="font-semibold text-slate-500">Peringkat Nasional (Keseluruhan):</p><p class="text-3xl font-bold text-slate-800">#20</p></div>
                             <div><p class="font-semibold text-slate-500">Peringkat Global (Keseluruhan):</p><p class="text-3xl font-bold text-slate-800">601-800</p></div>
-                            <div class="pt-2"><p class="font-semibold text-slate-500">Kategori SDG Terbaik:</p><p class="text-2xl font-bold text-amber-600">SDG 4: Education</p><p class="text-sm">(Peringkat #4 Nasional, #66 Global)</p></div>
+                            <div class="pt-2"><p class="font-semibold text-slate-500">Kategori SDG Terbaik:</p><p class="text-2xl font-bold text-amber-600">SDG 4: Education</p><p class="text-sm">(Peringkat #4 Nasional, =66 Global)</p></div>
                             <div><p class="font-semibold text-slate-500">Area Unggulan Lainnya:</p><ul class="list-disc list-inside mt-1"><li>SDG 17: Partnerships (#5 Nasional)</li><li>SDG 14: Life Below Water (#6 Nasional)</li><li>SDG 1 & 13 (#7 Nasional)</li></ul></div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
 
         <!-- Navigation -->
         <div class="flex justify-between items-center mt-8 pt-4 border-t border-slate-200">
             <button id="prevBtn" class="nav-btn">Previous</button>
-            <div id="slide-counter" class="text-slate-600 font-medium">Slide 1 / 9</div>
+            <select id="slide-jumper" title="Go to slide"></select>
             <button id="nextBtn" class="nav-btn">Next</button>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- SLIDESHOW LOGIC ---
             const slides = document.querySelectorAll('.slide');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
-            const slideCounter = document.getElementById('slide-counter');
+            const slideJumper = document.getElementById('slide-jumper');
             let currentSlide = 0;
             const totalSlides = slides.length;
 
+            // Populate the slide jumper dropdown
+            for (let i = 0; i < totalSlides; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Slide ${i + 1} of ${totalSlides}`;
+                slideJumper.appendChild(option);
+            }
+
             function showSlide(index) {
-                slides.forEach((slide, i) => {
-                    slide.classList.toggle('active', i === index);
-                });
-                slideCounter.textContent = `Slide ${index + 1} / ${totalSlides}`;
+                slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+                slideJumper.value = index;
                 prevBtn.disabled = index === 0;
                 nextBtn.disabled = index === totalSlides - 1;
             }
 
             prevBtn.addEventListener('click', () => { if (currentSlide > 0) { currentSlide--; showSlide(currentSlide); } });
             nextBtn.addEventListener('click', () => { if (currentSlide < totalSlides - 1) { currentSlide++; showSlide(currentSlide); } });
+            slideJumper.addEventListener('change', (e) => {
+                const newSlideIndex = parseInt(e.target.value, 10);
+                if (newSlideIndex !== currentSlide) {
+                    currentSlide = newSlideIndex;
+                    showSlide(currentSlide);
+                }
+            });
+            
             showSlide(currentSlide);
+
+            // --- DRAWING TOOL LOGIC ---
+            const canvas = document.getElementById('drawing-canvas');
+            const ctx = canvas.getContext('2d');
+            const presentationContainer = document.querySelector('.presentation-container');
+            const toolBtns = document.querySelectorAll('.tool-btn');
+            const toolsWrapper = document.getElementById('tools-wrapper');
+            const toggleToolbarBtn = document.getElementById('toggle-toolbar-btn');
+            const chevronRight = document.getElementById('chevron-right');
+            const chevronLeft = document.getElementById('chevron-left');
+            
+            let isDrawing = false;
+            let currentTool = 'cursor';
+            let lastX = 0;
+            let lastY = 0;
+
+            function resizeCanvas() {
+                canvas.width = presentationContainer.clientWidth;
+                canvas.height = presentationContainer.clientHeight;
+                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round';
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            function setActiveTool(tool) {
+                currentTool = tool;
+                document.querySelectorAll('#tools-wrapper .tool-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.id === `${tool}-tool`);
+                });
+                
+                canvas.style.pointerEvents = (tool === 'cursor') ? 'none' : 'auto';
+            }
+
+            // --- Toolbar and Tool Event Listeners ---
+            toggleToolbarBtn.addEventListener('click', () => {
+                const isHidden = toolsWrapper.classList.toggle('hidden');
+                chevronRight.classList.toggle('hidden', !isHidden);
+                chevronLeft.classList.toggle('hidden', isHidden);
+
+                if (isHidden) {
+                    setActiveTool('cursor'); // Reset to cursor when hiding
+                }
+            });
+
+            document.getElementById('cursor-tool').addEventListener('click', () => setActiveTool('cursor'));
+            document.getElementById('pen-tool').addEventListener('click', () => setActiveTool('pen'));
+            document.getElementById('eraser-tool').addEventListener('click', () => setActiveTool('eraser'));
+            document.getElementById('clear-tool').addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
+
+            // --- Drawing Event Handlers ---
+            function startDrawing(e) {
+                isDrawing = true;
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(e.offsetX, e.offsetY);
+                
+                if (currentTool === 'pen') {
+                    ctx.globalCompositeOperation = 'source-over';
+                    ctx.strokeStyle = '#ef4444'; // Red-500
+                    ctx.lineWidth = 4;
+                } else if (currentTool === 'eraser') {
+                    ctx.globalCompositeOperation = 'destination-out';
+                    ctx.lineWidth = 25;
+                }
+                ctx.stroke();
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+            }
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
         });
     </script>
 
 </body>
 </html>
+
+
 
