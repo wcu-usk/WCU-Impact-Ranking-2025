@@ -254,13 +254,13 @@
                 </div>
                 <div class="slide-footer">
                     <div class="w-full h-full flex justify-around items-center gap-x-2 sm:gap-x-4 px-2">
-                        <img src="img/logo/THE Impact Rankings 2025_RGB_COL.png" alt="THE Logo" class="sponsor-img" style="max-height: 25px;">
-                        <img src="img/logo/SDG.png" alt="SDG Goals Logo" class="sponsor-img" style="max-height: 40px;">
-                        <img src="img/logo/QS.jpg" alt="QS Logo" class="sponsor-img" style="max-height: 30px;">
-                        <img src="img/logo/Wcu.png" alt="WCU USK Logo" class="sponsor-img" style="max-height: 45px;" onerror="this.style.display='none'">
-                        <img src="img/logo/TutWuri.webp" alt="Tut Wuri Handayani Logo" class="sponsor-img" style="max-height: 40px;">
-                        <img src="img/logo/Berdampak.png" alt="DIKSAIN BERDAMPAK" class="sponsor-img" style="max-height: 40px;">
-                        <img src="img/logo/USK.png" alt="USK Logo" class="sponsor-img" style="max-height: 40px;">
+                        <img src="https://www.easy-quals.com/wp-content/uploads/2023/06/the-impact-rankings-logo-i1.png" alt="THE Logo" class="sponsor-img" style="max-height: 25px;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Sustainable_Development_Goals_logo.svg" alt="SDG Goals Logo" class="sponsor-img" style="max-height: 40px;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/QS_World_University_Rankings_logo_2022.svg/1024px-QS_World_University_Rankings_logo_2022.svg.png" alt="QS Logo" class="sponsor-img" style="max-height: 30px;">
+                        <img src="https://wcu.usk.ac.id/wp-content/uploads/2022/10/logo-wcu.png" alt="WCU USK Logo" class="sponsor-img" style="max-height: 45px;" onerror="this.style.display='none'">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Logo_of_the_Ministry_of_Education_and_Culture_of_the_Republic_of_Indonesia.svg" alt="Tut Wuri Handayani Logo" class="sponsor-img" style="max-height: 40px;">
+                        <img src="https://spm.itb.ac.id/wp-content/uploads/sites/261/2024/02/Logo-DIKSAIN-BERDAMPAK.png" alt="DIKSAIN BERDAMPAK" class="sponsor-img" style="max-height: 40px;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Lambang_Universitas_Syiah_Kuala.png/600px-Lambang_Universitas_Syiah_Kuala.png" alt="USK Logo" class="sponsor-img" style="max-height: 40px;">
                     </div>
                 </div>
             </div>
@@ -539,8 +539,8 @@
                                     <tr><td class="sdg-col">SDG 8: Decent Work & Economic Growth</td><td class="usk-rank-col">-</td><td>-</td></tr>
                                     <tr><td class="sdg-col">SDG 9: Industry, Innovation & Infrastructure</td><td class="usk-rank-col">401-600</td><td>#11</td></tr>
                                     <tr><td class="sdg-col">SDG 10: Reduced Inequalities</td><td class="usk-rank-col">601-800</td><td>#12</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 11: Sustainable Cities & Communities</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 12: Responsible Consumption & Production</td><td class="usk-rank-col">-</td><td>-</td></tr>
+                                    <tr><td class="sdg-col">SDG 11: Sustainable Cities & Communities</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
+                                    <tr><td class="sdg-col">SDG 12: Responsible Consumption & Production</td><td class="usk-rank-col">-</td><td>-</td></tr>
                                     <tr><td class="sdg-col">SDG 13: Climate Action</td><td class="usk-rank-col">101-200</td><td>#7</td></tr>
                                     <tr><td class="sdg-col">SDG 14: Life below Water</td><td class="usk-rank-col">79</td><td>#6</td></tr>
                                     <tr><td class="sdg-col">SDG 15: Life on Land</td><td class="usk-rank-col">-</td><td>-</td></tr>
@@ -575,42 +575,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- SLIDESHOW LOGIC ---
+            // --- DOM Element Selection ---
             const slides = document.querySelectorAll('.slide');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             const slideJumper = document.getElementById('slide-jumper');
-            let currentSlide = 0;
-            const totalSlides = slides.length;
-
-            // Populate the slide jumper dropdown
-            for (let i = 0; i < totalSlides; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = `Slide ${i + 1} of ${totalSlides}`;
-                slideJumper.appendChild(option);
-            }
-
-            function showSlide(index) {
-                slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
-                slideJumper.value = index;
-                prevBtn.disabled = index === 0;
-                nextBtn.disabled = index === totalSlides - 1;
-            }
-
-            prevBtn.addEventListener('click', () => { if (currentSlide > 0) { currentSlide--; showSlide(currentSlide); } });
-            nextBtn.addEventListener('click', () => { if (currentSlide < totalSlides - 1) { currentSlide++; showSlide(currentSlide); } });
-            slideJumper.addEventListener('change', (e) => {
-                const newSlideIndex = parseInt(e.target.value, 10);
-                if (newSlideIndex !== currentSlide) {
-                    currentSlide = newSlideIndex;
-                    showSlide(currentSlide);
-                }
-            });
-            
-            showSlide(currentSlide);
-
-            // --- DRAWING TOOL LOGIC ---
             const canvas = document.getElementById('drawing-canvas');
             const ctx = canvas.getContext('2d');
             const presentationContainer = document.querySelector('.presentation-container');
@@ -619,21 +588,51 @@
             const chevronRight = document.getElementById('chevron-right');
             const chevronLeft = document.getElementById('chevron-left');
             const colorPalette = document.getElementById('color-palette');
-            
+
+            // --- State Variables ---
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+            let slideDrawings = new Array(totalSlides);
             let isDrawing = false;
             let currentTool = 'cursor';
             let lastX = 0;
             let lastY = 0;
             let penColor = '#ef4444'; // Default pen color
 
+            // --- Functions ---
+            function showSlide(newIndex, oldIndex) {
+                if (oldIndex !== undefined) {
+                    slideDrawings[oldIndex] = canvas.toDataURL();
+                }
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (slideDrawings[newIndex]) {
+                    const img = new Image();
+                    img.onload = () => {
+                        ctx.drawImage(img, 0, 0);
+                    };
+                    img.src = slideDrawings[newIndex];
+                }
+
+                slides.forEach((slide, i) => slide.classList.toggle('active', i === newIndex));
+                slideJumper.value = newIndex;
+                prevBtn.disabled = newIndex === 0;
+                nextBtn.disabled = newIndex === totalSlides - 1;
+            }
+
             function resizeCanvas() {
+                const currentDrawing = canvas.toDataURL();
                 canvas.width = presentationContainer.clientWidth;
                 canvas.height = presentationContainer.clientHeight;
                 ctx.lineJoin = 'round';
                 ctx.lineCap = 'round';
+                const img = new Image();
+                img.onload = () => {
+                    ctx.drawImage(img, 0, 0);
+                };
+                img.src = currentDrawing;
             }
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
 
             function setActiveTool(tool) {
                 currentTool = tool;
@@ -641,36 +640,10 @@
                     btn.classList.toggle('active', btn.id === `${tool}-tool`);
                 });
 
-                // Show/hide color palette
                 colorPalette.classList.toggle('hidden', tool !== 'pen');
-                
                 canvas.style.pointerEvents = (tool === 'cursor') ? 'none' : 'auto';
             }
-
-            // --- Toolbar and Tool Event Listeners ---
-            toggleToolbarBtn.addEventListener('click', () => {
-                const isHidden = toolsWrapper.classList.toggle('hidden');
-                chevronRight.classList.toggle('hidden', !isHidden);
-                chevronLeft.classList.toggle('hidden', isHidden);
-                if (isHidden) setActiveTool('cursor');
-            });
-
-            document.getElementById('cursor-tool').addEventListener('click', () => setActiveTool('cursor'));
-            document.getElementById('pen-tool').addEventListener('click', () => setActiveTool('pen'));
-            document.getElementById('eraser-tool').addEventListener('click', () => setActiveTool('eraser'));
-            document.getElementById('clear-tool').addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
-
-            // Color Palette Logic
-            colorPalette.addEventListener('click', (e) => {
-                if (e.target.classList.contains('color-btn')) {
-                    penColor = e.target.dataset.color;
-                    // Update active color UI
-                    colorPalette.querySelector('.active-color').classList.remove('active-color');
-                    e.target.classList.add('active-color');
-                }
-            });
-
-            // --- Drawing Event Handlers ---
+            
             function getMousePos(e) {
                 const rect = canvas.getBoundingClientRect();
                 return {
@@ -709,10 +682,76 @@
                 isDrawing = false;
             }
 
+            // --- Initial Setup & Event Listeners ---
+            
+            // Populate slide jumper
+            for (let i = 0; i < totalSlides; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Slide ${i + 1} of ${totalSlides}`;
+                slideJumper.appendChild(option);
+            }
+
+            // Navigation listeners
+            prevBtn.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                    const oldSlide = currentSlide;
+                    currentSlide--;
+                    showSlide(currentSlide, oldSlide);
+                }
+            });
+            nextBtn.addEventListener('click', () => {
+                if (currentSlide < totalSlides - 1) {
+                    const oldSlide = currentSlide;
+                    currentSlide++;
+                    showSlide(currentSlide, oldSlide);
+                }
+            });
+            slideJumper.addEventListener('change', (e) => {
+                const newSlideIndex = parseInt(e.target.value, 10);
+                if (newSlideIndex !== currentSlide) {
+                    const oldSlide = currentSlide;
+                    currentSlide = newSlideIndex;
+                    showSlide(currentSlide, oldSlide);
+                }
+            });
+
+            // Toolbar listeners
+            toggleToolbarBtn.addEventListener('click', () => {
+                const isHidden = toolsWrapper.classList.toggle('hidden');
+                chevronRight.classList.toggle('hidden', !isHidden);
+                chevronLeft.classList.toggle('hidden', isHidden);
+                if (isHidden) setActiveTool('cursor');
+            });
+
+            document.getElementById('cursor-tool').addEventListener('click', () => setActiveTool('cursor'));
+            document.getElementById('pen-tool').addEventListener('click', () => setActiveTool('pen'));
+            document.getElementById('eraser-tool').addEventListener('click', () => setActiveTool('eraser'));
+            document.getElementById('clear-tool').addEventListener('click', () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                slideDrawings[currentSlide] = null;
+            });
+
+            colorPalette.addEventListener('click', (e) => {
+                if (e.target.classList.contains('color-btn')) {
+                    penColor = e.target.dataset.color;
+                    colorPalette.querySelector('.active-color').classList.remove('active-color');
+                    e.target.classList.add('active-color');
+                }
+            });
+
+            // Canvas drawing listeners
             canvas.addEventListener('mousedown', startDrawing);
             canvas.addEventListener('mousemove', draw);
             canvas.addEventListener('mouseup', stopDrawing);
             canvas.addEventListener('mouseout', stopDrawing);
+
+            // Window resize listener
+            window.addEventListener('resize', resizeCanvas);
+            
+            // --- Initial Calls ---
+            resizeCanvas(); // Set initial canvas size
+            showSlide(currentSlide); // Show the first slide
         });
     </script>
 
