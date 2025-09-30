@@ -49,9 +49,10 @@
         }
         #tools-wrapper {
             display: flex;
+            align-items: center; /* Align items for color palette */
             gap: 0.5rem;
             transition: max-width 0.4s ease-in-out, opacity 0.3s ease-in-out 0.1s;
-            max-width: 200px;
+            max-width: 300px; /* Increased width for new tools */
             opacity: 1;
             overflow: hidden;
             white-space: nowrap;
@@ -79,6 +80,27 @@
         .tool-btn svg {
             width: 24px;
             height: 24px;
+        }
+        #color-palette {
+            display: flex;
+            gap: 0.4rem;
+            margin-left: 0.5rem;
+            align-items: center;
+        }
+        .color-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 9999px; /* circle */
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .color-btn:hover {
+            transform: scale(1.1);
+        }
+        .color-btn.active-color {
+            box-shadow: 0 0 0 3px #0284c7;
         }
         #toggle-toolbar-btn {
             margin-left: 0.5rem;
@@ -179,6 +201,9 @@
              background-color: #fde047; /* Yellow-300 */
              color: #422006; /* Yellow-950 */
         }
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body class="p-4 sm:p-8">
@@ -194,11 +219,16 @@
                 <button id="pen-tool" class="tool-btn" title="Pen Tool">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg>
                 </button>
+                <div id="color-palette" class="hidden">
+                    <button class="color-btn active-color" data-color="#ef4444" style="background-color: #ef4444;"></button>
+                    <button class="color-btn" data-color="#3b82f6" style="background-color: #3b82f6;"></button>
+                    <button class="color-btn" data-color="#22c55e" style="background-color: #22c55e;"></button>
+                    <button class="color-btn" data-color="#1e293b" style="background-color: #1e293b;"></button>
+                </div>
                 <button id="eraser-tool" class="tool-btn" title="Eraser Tool">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.28183 21.0001L20.2527 9.02921C21.2287 8.05322 21.2287 6.47129 20.2527 5.4953L18.5048 3.74737C17.5288 2.77138 15.9469 2.77138 14.9709 3.74737L3.00002 15.7183L8.28183 21.0001Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M3 15.7188L8.2818 21.0006" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12.9996 5.71912L18.2814 11.0009" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path d="M21.73 6.27l-4-4a2 2 0 00-2.83 0l-12 12a2 2 0 000 2.83l4 4a2 2 0 002.83 0l12-12a2 2 0 000-2.83z"></path>
+                        <path d="M4.93 14.93l4.14 4.14"></path>
                     </svg>
                 </button>
                  <button id="clear-tool" class="tool-btn" title="Clear All">
@@ -506,15 +536,15 @@
                                     <tr><td class="usk-sdg-col">SDG 5: Gender Equality</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
                                     <tr><td class="usk-sdg-col">SDG 6: Clean Water & Sanitation</td><td class="usk-rank-col">-</td><td>-</td></tr>
                                     <tr><td class="usk-sdg-col">SDG 7: Affordable & Clean Energy</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 8: Decent Work & Economic Growth</td><td class="usk-rank-col">-</td><td>-</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 9: Industry, Innovation & Infrastructure</td><td class="usk-rank-col">401-600</td><td>#11</td></tr>
+                                    <tr><td class="sdg-col">SDG 8: Decent Work & Economic Growth</td><td class="usk-rank-col">-</td><td>-</td></tr>
+                                    <tr><td class="sdg-col">SDG 9: Industry, Innovation & Infrastructure</td><td class="usk-rank-col">401-600</td><td>#11</td></tr>
                                     <tr><td class="sdg-col">SDG 10: Reduced Inequalities</td><td class="usk-rank-col">601-800</td><td>#12</td></tr>
                                     <tr><td class="usk-sdg-col">SDG 11: Sustainable Cities & Communities</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
                                     <tr><td class="usk-sdg-col">SDG 12: Responsible Consumption & Production</td><td class="usk-rank-col">-</td><td>-</td></tr>
                                     <tr><td class="sdg-col">SDG 13: Climate Action</td><td class="usk-rank-col">101-200</td><td>#7</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 14: Life below Water</td><td class="usk-rank-col">79</td><td>#6</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 15: Life on Land</td><td class="usk-rank-col">-</td><td>-</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 16: Peace, Justice & Strong Institutions</td><td class="usk-rank-col">-</td><td>-</td></tr>
+                                    <tr><td class="sdg-col">SDG 14: Life below Water</td><td class="usk-rank-col">79</td><td>#6</td></tr>
+                                    <tr><td class="sdg-col">SDG 15: Life on Land</td><td class="usk-rank-col">-</td><td>-</td></tr>
+                                    <tr><td class="sdg-col">SDG 16: Peace, Justice & Strong Institutions</td><td class="usk-rank-col">-</td><td>-</td></tr>
                                     <tr><td class="usk-sdg-col">SDG 17: Partnership for the Goals</td><td class="usk-rank-col">101-200</td><td class="usk-highlight-rank">#5</td></tr>
                                 </tbody>
                             </table>
@@ -584,16 +614,17 @@
             const canvas = document.getElementById('drawing-canvas');
             const ctx = canvas.getContext('2d');
             const presentationContainer = document.querySelector('.presentation-container');
-            const toolBtns = document.querySelectorAll('.tool-btn');
             const toolsWrapper = document.getElementById('tools-wrapper');
             const toggleToolbarBtn = document.getElementById('toggle-toolbar-btn');
             const chevronRight = document.getElementById('chevron-right');
             const chevronLeft = document.getElementById('chevron-left');
+            const colorPalette = document.getElementById('color-palette');
             
             let isDrawing = false;
             let currentTool = 'cursor';
             let lastX = 0;
             let lastY = 0;
+            let penColor = '#ef4444'; // Default pen color
 
             function resizeCanvas() {
                 canvas.width = presentationContainer.clientWidth;
@@ -609,6 +640,9 @@
                 document.querySelectorAll('#tools-wrapper .tool-btn').forEach(btn => {
                     btn.classList.toggle('active', btn.id === `${tool}-tool`);
                 });
+
+                // Show/hide color palette
+                colorPalette.classList.toggle('hidden', tool !== 'pen');
                 
                 canvas.style.pointerEvents = (tool === 'cursor') ? 'none' : 'auto';
             }
@@ -618,10 +652,7 @@
                 const isHidden = toolsWrapper.classList.toggle('hidden');
                 chevronRight.classList.toggle('hidden', !isHidden);
                 chevronLeft.classList.toggle('hidden', isHidden);
-
-                if (isHidden) {
-                    setActiveTool('cursor'); // Reset to cursor when hiding
-                }
+                if (isHidden) setActiveTool('cursor');
             });
 
             document.getElementById('cursor-tool').addEventListener('click', () => setActiveTool('cursor'));
@@ -629,28 +660,49 @@
             document.getElementById('eraser-tool').addEventListener('click', () => setActiveTool('eraser'));
             document.getElementById('clear-tool').addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
 
+            // Color Palette Logic
+            colorPalette.addEventListener('click', (e) => {
+                if (e.target.classList.contains('color-btn')) {
+                    penColor = e.target.dataset.color;
+                    // Update active color UI
+                    colorPalette.querySelector('.active-color').classList.remove('active-color');
+                    e.target.classList.add('active-color');
+                }
+            });
+
             // --- Drawing Event Handlers ---
+            function getMousePos(e) {
+                const rect = canvas.getBoundingClientRect();
+                return {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+            }
+
             function startDrawing(e) {
                 isDrawing = true;
-                [lastX, lastY] = [e.offsetX, e.offsetY];
+                const pos = getMousePos(e);
+                [lastX, lastY] = [pos.x, pos.y];
             }
 
             function draw(e) {
                 if (!isDrawing) return;
+                const pos = getMousePos(e);
                 ctx.beginPath();
                 ctx.moveTo(lastX, lastY);
-                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.lineTo(pos.x, pos.y);
                 
                 if (currentTool === 'pen') {
                     ctx.globalCompositeOperation = 'source-over';
-                    ctx.strokeStyle = '#ef4444'; // Red-500
+                    ctx.strokeStyle = penColor;
                     ctx.lineWidth = 4;
                 } else if (currentTool === 'eraser') {
                     ctx.globalCompositeOperation = 'destination-out';
                     ctx.lineWidth = 25;
                 }
                 ctx.stroke();
-                [lastX, lastY] = [e.offsetX, e.offsetY];
+                
+                [lastX, lastY] = [pos.x, pos.y];
             }
 
             function stopDrawing() {
@@ -666,6 +718,4 @@
 
 </body>
 </html>
-
-
 
