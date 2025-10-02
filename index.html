@@ -291,7 +291,7 @@
     <div class="w-screen h-screen bg-white presentation-container flex flex-col">
         <div id="custom-tooltip"></div>
         <!-- Drawing Canvas & Toolbar -->
-        <div class="toolbar">
+       <div class="toolbar">
             <div id="tools-wrapper">
                 <button id="cursor-tool" class="tool-btn active" title="Cursor Tool">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5" /></svg>
@@ -318,6 +318,14 @@
             <button id="toggle-toolbar-btn" class="tool-btn" title="Toggle Tools">
                 <svg id="chevron-right" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
                 <svg id="chevron-left" class="hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+            </button>
+            <button id="fullscreenBtn" class="tool-btn" title="Toggle Fullscreen">
+                <svg id="enter-fullscreen-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-slate-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                </svg>
+                <svg id="exit-fullscreen-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-slate-600 hidden">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9V4.5M15 9h4.5M15 9l5.25-5.25M15 15v4.5M15 15h4.5M15 15l5.25 5.25" />
+                </svg>
             </button>
         </div>
         <canvas id="drawing-canvas"></canvas>
@@ -821,12 +829,12 @@
             </div>
 
             <!-- NEW Slide 13: Thank You -->
-            <!-- <div class="slide justify-center items-center text-center p-8 bg-slate-800">
-                <div class="w-full">
-                    <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-4">Terima Kasih</h1>
+            <!-- <div class="slide justify-center items-center text-center p-8 bg-slate-800"> -->
+                <!-- <div class="w-full"> -->
+                    <!-- <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-4">Terima Kasih</h1> -->
                     <!-- <p class="text-2xl md:text-3xl font-semibold text-sky-400">Ada Pertanyaan?</p> -->
-                <!-- </div>
-            </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
             
         </div>
 
@@ -869,6 +877,9 @@
             const chevronLeft = document.getElementById('chevron-left');
             const colorPalette = document.getElementById('color-palette');
             const customTooltip = document.getElementById('custom-tooltip');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const enterFullscreenIcon = document.getElementById('enter-fullscreen-icon');
+            const exitFullscreenIcon = document.getElementById('exit-fullscreen-icon');
 
             // --- State Variables ---
             let currentSlide = 0;
@@ -961,6 +972,41 @@
 
             function stopDrawing() {
                 isDrawing = false;
+            }
+
+            function toggleFullscreen() {
+                const elem = document.documentElement; 
+                if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+                    if (elem.requestFullscreen) {
+                        elem.requestFullscreen();
+                    } else if (elem.mozRequestFullScreen) { /* Firefox */
+                        elem.mozRequestFullScreen();
+                    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                        elem.webkitRequestFullscreen();
+                    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                        elem.msRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.mozCancelFullScreen) { /* Firefox */
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) { /* IE/Edge */
+                        document.msExitFullscreen();
+                    }
+                }
+            }
+
+            function updateFullscreenIcon() {
+                if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+                    enterFullscreenIcon.classList.add('hidden');
+                    exitFullscreenIcon.classList.remove('hidden');
+                } else {
+                    enterFullscreenIcon.classList.remove('hidden');
+                    exitFullscreenIcon.classList.add('hidden');
+                }
             }
 
             // --- Chart.js Initialization ---
@@ -1098,6 +1144,14 @@
             canvas.addEventListener('mousemove', draw);
             canvas.addEventListener('mouseup', stopDrawing);
             canvas.addEventListener('mouseout', stopDrawing);
+
+            // Fullscreen listener
+            fullscreenBtn.addEventListener('click', toggleFullscreen);
+            document.addEventListener('fullscreenchange', updateFullscreenIcon);
+            document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
+            document.addEventListener('mozfullscreenchange', updateFullscreenIcon);
+            document.addEventListener('MSFullscreenChange', updateFullscreenIcon);
+
 
             // Window resize listener
             window.addEventListener('resize', resizeCanvas);
