@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="img/logo/favusk.ico">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
@@ -134,7 +135,7 @@
             border-radius: 0.5rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color: 0.3s;
+            transition: background-color 0.3s;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .nav-btn:hover {
@@ -201,8 +202,8 @@
             color: #713f12; /* Yellow-900 */
         }
         .highlight-header {
-             background-color: #fde047; /* Yellow-300 */
-             color: #422006; /* Yellow-950 */
+            background-color: #fde047; /* Yellow-300 */
+            color: #422006; /* Yellow-950 */
         }
         .hidden {
             display: none !important;
@@ -324,7 +325,7 @@
         <!-- Slides Container -->
         <div id="slides-container" class="flex-grow">
             
-            <!-- Slide 1: Title -->
+            <!-- Slide 1: Title (Unchanged) -->
             <div class="slide active justify-center items-center text-center p-8">
                 <div class="w-full">
                     <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800 mb-3">Peringkat Universitas Indonesia</h1>
@@ -343,9 +344,9 @@
                     </div>
                 </div>
             </div>
-
-        <!-- Slide 2 USK Ranking Progress SDG 2023 Sampai 2024 -->
-             <div class="slide p-4">
+            
+            <!-- slide 2 -->
+            <div class="slide p-4">
                 <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 text-slate-800">Perkembangan Peringkat USK (2023-2025)</h2>
                 <div class="overflow-x-auto">
                     <table class="w-full border-collapse alternating-rows">
@@ -382,112 +383,112 @@
                     </table>
                 </div>
             </div>
-            <!-- Slide Kedua -->
+
+            <!-- Slide 3: USK Strength Map (Unchanged) -->
             <div class="slide p-4 justify-center">
                  <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Peta Kekuatan SDG Universitas Syiah Kuala</h2>
                  <p class="text-center text-slate-500 mb-6">Visualisasi Peringkat Nasional USK di setiap Kategori SDG.</p>
                  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-center text-sm max-w-5xl mx-auto">
-                    <!-- Cards with new design -->
-                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-amber-300 border border-amber-400">
-                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-amber-900 text-lg">SDG 4: Quality Education</p></div>
-                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
-                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#4</p></div>
-                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-2xl font-extrabold leading-none">=66</p></div>
-                        </div>
-                    </div>
                      <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-amber-300 border border-amber-400">
-                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-amber-900 text-lg">SDG 17: Partnership for the Goals</p></div>
-                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
-                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#5</p></div>
-                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">101-200</p></div>
-                        </div>
-                    </div>
-                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
-                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 14: Life Below Water</p></div>
-                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
-                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#6</p></div>
-                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-2xl font-extrabold leading-none">79</p></div>
-                        </div>
-                    </div>
-                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
-                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 1: No Poverty</p></div>
-                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
-                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#7</p></div>
-                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">101-200</p></div>
-                        </div>
-                    </div>
-                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
-                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 13: Climate Action</p></div>
-                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
-                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#7</p></div>
-                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">101-200</p></div>
-                        </div>
-                    </div>
-                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
-                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 3: Good Health & Well-being</p></div>
-                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
-                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#9</p></div>
-                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">301-400</p></div>
-                        </div>
-                    </div>
-                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
-                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 2: Zero Hunger</p></div>
-                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
-                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#10</p></div>
-                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">201-300</p></div>
-                        </div>
-                    </div>
-                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
-                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 5: Gender Equality</p></div>
-                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
-                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#11</p></div>
-                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">301-400</p></div>
-                        </div>
-                    </div>
-                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
-                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 7: Affordable & Clean Energy</p></div>
-                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
-                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#11</p></div>
-                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">301-400</p></div>
-                        </div>
-                    </div>
+                         <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-amber-900 text-lg">SDG 4: Quality Education</p></div>
+                         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                         <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                             <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#4</p></div>
+                             <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-2xl font-extrabold leading-none">=66</p></div>
+                         </div>
+                     </div>
+                      <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-amber-300 border border-amber-400">
+                         <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-amber-900 text-lg">SDG 17: Partnership for the Goals</p></div>
+                         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                         <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                             <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#5</p></div>
+                             <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">101-200</p></div>
+                         </div>
+                     </div>
+                     <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
+                         <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 14: Life Below Water</p></div>
+                         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                         <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                             <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#6</p></div>
+                             <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-2xl font-extrabold leading-none">79</p></div>
+                         </div>
+                     </div>
+                     <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
+                         <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 1: No Poverty</p></div>
+                         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                         <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                             <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#7</p></div>
+                             <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">101-200</p></div>
+                         </div>
+                     </div>
+                     <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
+                         <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 13: Climate Action</p></div>
+                         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                         <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                             <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#7</p></div>
+                             <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">101-200</p></div>
+                         </div>
+                     </div>
+                     <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
+                         <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 3: Good Health & Well-being</p></div>
+                         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                         <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                             <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#9</p></div>
+                             <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">301-400</p></div>
+                         </div>
+                     </div>
+                     <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
+                         <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 2: Zero Hunger</p></div>
+                         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                         <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                             <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#10</p></div>
+                             <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">201-300</p></div>
+                         </div>
+                     </div>
                      <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
-                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 9: Industry, Innovation & Infrastructure</p></div>
-                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
-                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#11</p></div>
-                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">401-600</p></div>
-                        </div>
-                    </div>
+                         <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 5: Gender Equality</p></div>
+                         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
+                         <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                             <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#11</p></div>
+                             <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">301-400</p></div>
+                         </div>
+                     </div>
                      <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
-                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 11: Sustainable Cities & Communities</p></div>
-                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
-                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#11</p></div>
-                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">301-400</p></div>
-                        </div>
-                    </div>
-                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
-                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 10: Reduced Inequalities</p></div>
-                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
-                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#12</p></div>
-                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">601-800</p></div>
-                        </div>
-                    </div>
-                 </div>
+                         <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 7: Affordable & Clean Energy</p></div>
+                         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
+                         <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                             <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#11</p></div>
+                             <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">301-400</p></div>
+                         </div>
+                     </div>
+                      <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
+                         <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 9: Industry, Innovation & Infrastructure</p></div>
+                         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
+                         <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                             <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#11</p></div>
+                             <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">401-600</p></div>
+                         </div>
+                     </div>
+                      <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
+                         <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 11: Sustainable Cities & Communities</p></div>
+                         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
+                         <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                             <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#11</p></div>
+                             <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">301-400</p></div>
+                         </div>
+                     </div>
+                     <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
+                         <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 10: Reduced Inequalities</p></div>
+                         <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
+                         <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                             <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#12</p></div>
+                             <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">601-800</p></div>
+                         </div>
+                     </div>
+                  </div>
             </div>
 
-            <!-- Slide 3: QS WUR Ranking Progress -->
+            <!-- Slide 4: QS WUR Ranking Progress -->
             <div class="slide p-4 flex-col justify-center">
                 <h2 class="text-3xl font-bold text-center mb-6" style="color: #002D62;">QS World University Ranking (QS WUR)</h2>
                 <div class="overflow-x-auto shadow-lg rounded-lg">
@@ -537,12 +538,12 @@
                 </div>
             </div>
 
-            <!-- Slide ke 4 Ui dan Webometrics -->
+             <!-- Slide 5: UI & Webometrics -->
             <div class="slide p-4 flex-col justify-center">
                 <div class="max-w-4xl mx-auto w-full space-y-8">
                     <!-- UI GreenMetric Table -->
                     <div class="flex flex-col">
-                        <h2 class="text-3xl font-bold text-center mb-4" style="color: #4D8235;">UI GreenMetric</h2>
+                        <h2 class="text-3xl font-bold text-center mb-4" style="color: #4D8235;">Peringkat Lainnya: UI GreenMetric</h2>
                         <div class="overflow-x-auto shadow-lg rounded-lg">
                             <table class="w-full border-collapse">
                                 <thead class="table-header" style="background-color: #4D8235;">
@@ -578,7 +579,7 @@
                     </div>
                     <!-- Webometrics Table -->
                     <div class="flex flex-col">
-                        <h2 class="text-3xl font-bold text-center mb-4" style="color: #00427D;">Webometrics</h2>
+                        <h2 class="text-3xl font-bold text-center mb-4" style="color: #00427D;">Peringkat Lainnya: Webometrics</h2>
                         <div class="overflow-x-auto shadow-lg rounded-lg">
                             <table class="w-full border-collapse">
                                 <thead class="table-header" style="background-color: #00427D;">
@@ -609,7 +610,26 @@
                 </div>
             </div>
 
-            <!-- Slide 2: Overall Ranking -->
+
+            <!-- NEW Slide: What is THE Impact Rankings
+            <div class="slide p-8 justify-center">
+                <h2 class="text-3xl font-bold text-center mb-8 text-slate-800">Apa itu THE Impact Rankings?</h2>
+                <div class="flex flex-col md:flex-row items-center gap-8 max-w-5xl mx-auto">
+                    <div class="w-full md:w-1/2 text-slate-700 text-lg space-y-4">
+                        <p>Times Higher Education (THE) Impact Rankings adalah satu-satunya tabel kinerja global yang menilai universitas berdasarkan <strong>Tujuan Pembangunan Berkelanjutan (SDGs)</strong> dari Perserikatan Bangsa-Bangsa (PBB).</p>
+                        <ul class="list-disc list-inside space-y-2 pl-4">
+                            <li>Mengukur kontribusi universitas terhadap masyarakat.</li>
+                            <li>Menilai komitmen pada isu-isu global seperti pengentasan kemiskinan, kesetaraan, aksi iklim, dan pendidikan berkualitas.</li>
+                            <li>Menjadi bukti nyata dampak positif sebuah institusi pendidikan tinggi.</li>
+                        </ul>
+                    </div>
+                    <div class="w-1/2 md:w-1/2 flex justify-center items-center">
+                        <img src="https://www.un.org/sustainabledevelopment/wp-content/uploads/2019/08/SDG_logo_without_UN_emblem_horizontal_web.png" alt="SDG Goals Logo" class="max-w-xs w-full">
+                    </div>
+                </div>
+            </div> -->
+            
+            <!-- Slide 3: Overall Ranking (Reordered) -->
             <div class="slide p-4">
                 <h2 class="text-3xl font-bold text-center mb-6 text-slate-800">Top 20 Universitas (Peringkat Keseluruhan)</h2>
                 <div class="overflow-x-auto">
@@ -648,10 +668,18 @@
                 </div>
             </div>
 
-            <!-- Slides 3 to 9 are unchanged and should be placed here -->
-            <!-- Slide 3: SDG Ranks 1-5 -->
+            <!-- NEW Slide : USK Ranking Progress as a Chart
+            <div class="slide p-8 justify-center items-center">
+                 <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 text-slate-800">Perkembangan Peringkat USK (2023-2025)</h2>
+                 <p class="text-center text-slate-500 mb-8 max-w-2xl">Visualisasi peringkat keseluruhan USK dalam THE Impact Rankings selama tiga tahun terakhir. Peringkat yang lebih rendah menunjukkan posisi yang lebih baik.</p>
+                 <div class="w-full max-w-2xl mx-auto">
+                    <canvas id="uskProgressChart"></canvas>
+                 </div>
+            </div> -->
+         
+            <!-- Slide 8: Detailed SDG Ranks (1-5) -->
             <div class="slide p-2 sm:p-4">
-                 <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Peringkat SDG: Universitas 1-5</h2>
+                 <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Detail Peringkat SDG: Universitas 1-5</h2>
                  <div class="overflow-x-auto">
                     <table class="w-full border-collapse alternating-rows min-w-[600px]">
                         <thead class="table-header">
@@ -682,8 +710,9 @@
                     </table>
                  </div>
             </div>
+            <!-- Slide 9: Detailed SDG Ranks (6-10) -->
             <div class="slide p-2 sm:p-4">
-                 <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Peringkat SDG: Universitas 6-10</h2>
+                 <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Detail Peringkat SDG: Universitas 6-10</h2>
                  <div class="overflow-x-auto">
                     <table class="w-full border-collapse alternating-rows min-w-[600px]">
                          <thead class="table-header">
@@ -714,8 +743,9 @@
                     </table>
                  </div>
             </div>
+            <!-- Slide 10: Detailed SDG Ranks (11-15) -->
             <div class="slide p-2 sm:p-4">
-                 <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Peringkat SDG: Universitas 11-15</h2>
+                 <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Detail Peringkat SDG: Universitas 11-15</h2>
                  <div class="overflow-x-auto">
                     <table class="w-full border-collapse alternating-rows min-w-[600px]">
                          <thead class="table-header">
@@ -746,8 +776,9 @@
                     </table>
                  </div>
             </div>
+            <!-- Slide 11: Detailed SDG Ranks (16-20) -->
              <div class="slide p-2 sm:p-4">
-                 <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Peringkat SDG: Universitas 16-20</h2>
+                 <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Detail Peringkat SDG: Universitas 16-20</h2>
                  <div class="overflow-x-auto">
                     <table class="w-full border-collapse alternating-rows min-w-[600px]">
                          <thead class="table-header">
@@ -778,6 +809,7 @@
                     </table>
                  </div>
             </div>
+            <!-- Slide 12: Conclusion (Unchanged) -->
             <div class="slide p-8 justify-center">
                  <h2 class="text-3xl font-bold text-center mb-8 text-slate-800">Highlight dan Kesimpulan Utama: <span style="color: #006837;">Universitas Syiah Kuala (USK)</span></h2>
                 <ul class="space-y-5 text-slate-700 text-lg max-w-4xl mx-auto">
@@ -787,11 +819,19 @@
                      <li class="flex items-start"><span class="text-yellow-500 text-2xl mr-4">&#9733;</span><div><span class="font-semibold text-slate-800">Komitmen Kemitraan yang Kuat:</span> Peringkat tinggi dalam <strong>SDG 17: Kemitraan untuk Tujuan</strong> (peringkat #5 Nasional) menunjukkan kemampuan USK dalam menjalin kolaborasi untuk mencapai tujuan keberlanjutan.</div></li>
                 </ul>
             </div>
+
+            <!-- NEW Slide 13: Thank You -->
+            <div class="slide justify-center items-center text-center p-8 bg-slate-800">
+                <div class="w-full">
+                    <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-4">Terima Kasih</h1>
+                    <!-- <p class="text-2xl md:text-3xl font-semibold text-sky-400">Ada Pertanyaan?</p> -->
+                </div>
+            </div>
             
         </div>
 
         <!-- Navigation -->
-        <div class="flex justify-center items-center gap-x-8 mt-8 pt-4 border-t border-slate-200">
+        <div class="flex justify-center items-center gap-x-8 mt-auto py-4 border-t border-slate-200 bg-white">
             <button id="prevBtn" class="nav-btn">Previous</button>
             <select id="slide-jumper" title="Go to slide"></select>
             <button id="nextBtn" class="nav-btn">Next</button>
@@ -923,6 +963,62 @@
                 isDrawing = false;
             }
 
+            // --- Chart.js Initialization ---
+            function createUskProgressChart() {
+                const chartCtx = document.getElementById('uskProgressChart').getContext('2d');
+                new Chart(chartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2023', '2024', '2025'],
+                        datasets: [{
+                            label: 'Peringkat Global (Batas Bawah)',
+                            data: [601, 801, 601], // Lower bound of the range (e.g., 601-800 -> 601)
+                            backgroundColor: [
+                                'rgba(251, 191, 36, 0.6)', // amber-400
+                                'rgba(239, 68, 68, 0.6)', // red-500
+                                'rgba(34, 197, 94, 0.6)' // green-500
+                            ],
+                            borderColor: [
+                                'rgba(251, 191, 36, 1)',
+                                'rgba(239, 68, 68, 1)',
+                                'rgba(34, 197, 94, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y', // Horizontal bar chart
+                        scales: {
+                            x: {
+                                beginAtZero: false,
+                                reverse: true, // Lower number is better
+                                title: {
+                                    display: true,
+                                    text: 'Peringkat Dunia (Lebih Rendah Lebih Baik)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const rank = context.raw;
+                                        const year = context.label;
+                                        if (year === '2023') return ` Peringkat: 601-800`;
+                                        if (year === '2024') return ` Peringkat: 801-1000`;
+                                        if (year === '2025') return ` Peringkat: 601-800`;
+                                        return ` Peringkat: ${rank}`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
             // --- Initial Setup & Event Listeners ---
             
             // Populate slide jumper
@@ -1009,9 +1105,9 @@
             // --- Initial Calls ---
             resizeCanvas(); // Set initial canvas size
             showSlide(currentSlide); // Show the first slide
+            createUskProgressChart(); // Initialize the chart
         });
     </script>
 
 </body>
 </html>
-
