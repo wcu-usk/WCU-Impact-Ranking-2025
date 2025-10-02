@@ -1,0 +1,259 @@
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* Slate-100 */
+        }
+        .presentation-container {
+            position: relative; /* Needed for canvas overlay */
+        }
+        .slide {
+            display: none;
+            height: 100%;
+            padding-bottom: 70px; /* Space for footer */
+            position: relative;
+        }
+        #slides-container {
+            position: relative;
+        }
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+        #drawing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Initially disabled */
+            z-index: 10;
+        }
+        .toolbar {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 20;
+        }
+        #tools-wrapper {
+            display: flex;
+            align-items: center; /* Align items for color palette */
+            gap: 0.5rem;
+            transition: max-width 0.4s ease-in-out, opacity 0.3s ease-in-out 0.1s;
+            max-width: 300px; /* Increased width for new tools */
+            opacity: 1;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        #tools-wrapper.hidden {
+            max-width: 0;
+            opacity: 0;
+            transition: max-width 0.4s ease-in-out, opacity 0.2s ease-in-out;
+        }
+        .tool-btn {
+            padding: 0.5rem;
+            border: 2px solid transparent;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0; /* Prevent buttons from shrinking */
+        }
+        .tool-btn:hover {
+            background-color: #e2e8f0; /* Slate-200 */
+        }
+        .tool-btn.active {
+            border-color: #0284c7; /* Sky-600 */
+            background-color: #e0f2fe; /* Sky-100 */
+        }
+        .tool-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+        #color-palette {
+            display: flex;
+            gap: 0.4rem;
+            margin-left: 0.5rem;
+            align-items: center;
+        }
+        .color-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 9999px; /* circle */
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .color-btn:hover {
+            transform: scale(1.1);
+        }
+        .color-btn.active-color {
+            box-shadow: 0 0 0 3px #0284c7;
+        }
+        #toggle-toolbar-btn {
+            margin-left: 0.5rem;
+        }
+        .table-header {
+            background-color: #1e293b; /* Slate-800 */
+            color: white;
+            font-weight: 600;
+        }
+        th, td {
+            border: 1px solid #e2e8f0; /* Slate-200 */
+            padding: 0.6rem 0.75rem;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        .sdg-col, .usk-sdg-col {
+            text-align: left;
+            width: 30%;
+            font-weight: 500;
+        }
+        .rank-col, .usk-rank-col {
+            width: 14%;
+        }
+        .nav-btn {
+            background-color: #0284c7; /* Sky-600 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color: 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav-btn:hover {
+            background-color: #0369a1; /* Sky-700 */
+        }
+        .nav-btn:disabled {
+            background-color: #94a3b8; /* Slate-400 */
+            cursor: not-allowed;
+        }
+        #slide-jumper {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding: 0.6rem 2.5rem 0.6rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db; /* gray-300 */
+            font-weight: 600;
+            color: #4b5563; /* gray-600 */
+            cursor: pointer;
+            text-align: center;
+        }
+        #slide-jumper:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            border-color: #3b82f6; /* blue-500 */
+        }
+        .slide-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 8px;
+            background-color: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .sponsor-img {
+            max-height: 50px;
+            width: auto;
+            object-fit: contain;
+        }
+        /* Styles for USK specific elements */
+        .usk-table-header {
+            background-color: #006837; /* USK Green */
+        }
+        .usk-highlight-rank { color: #be123c; font-weight: 700; }
+        .alternating-rows tbody tr:nth-child(even) {
+            background-color: #f8fafc; /* Slate-50 */
+        }
+        .highlight-row {
+            background-color: #fef9c3; /* Yellow-100 */
+            font-weight: 700;
+            color: #713f12; /* Yellow-900 */
+        }
+        .highlight-col {
+            background-color: #fef9c3; /* Yellow-100 */
+            font-weight: 700;
+            color: #713f12; /* Yellow-900 */
+        }
+        .highlight-header {
+             background-color: #fde047; /* Yellow-300 */
+             color: #422006; /* Yellow-950 */
+        }
+        .hidden {
+            display: none !important;
+        }
+        /* Tutorial Styles */
+        #tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.7); /* Slate-900 with opacity */
+            z-index: 99;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #tutorial-modal {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 101;
+        }
+        .tutorial-icon {
+            display: inline-flex;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+            background-color: #f1f5f9;
+            border-radius: 0.25rem;
+            padding: 0.2rem;
+        }
+        .tutorial-icon svg{
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Custom Tooltip */
+        #custom-tooltip {
+            position: absolute;
+            background-color: #1e293b;
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        #custom-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
