@@ -18,8 +18,11 @@
         }
         .slide {
             display: none;
-            min-height: 85vh; /* Adjusted for footer */
+            height: 100%;
             padding-bottom: 70px; /* Space for footer */
+            position: relative;
+        }
+        #slides-container {
             position: relative;
         }
         .slide.active {
@@ -114,7 +117,7 @@
             border: 1px solid #e2e8f0; /* Slate-200 */
             padding: 0.6rem 0.75rem;
             text-align: center;
-            font-size: 0.875rem;
+            font-size: 0.95rem;
         }
         .sdg-col, .usk-sdg-col {
             text-align: left;
@@ -239,9 +242,35 @@
             width: 20px;
             height: 20px;
         }
+
+        /* Custom Tooltip */
+        #custom-tooltip {
+            position: absolute;
+            background-color: #1e293b;
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        #custom-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
     </style>
 </head>
-<body class="p-4 sm:p-8">
+<body>
 
     <div id="tutorial-overlay" class="hidden">
         <div id="tutorial-modal" class="relative">
@@ -258,8 +287,8 @@
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto bg-white p-4 sm:p-6 rounded-2xl shadow-xl presentation-container">
-        
+    <div class="w-screen h-screen bg-white presentation-container flex flex-col">
+        <div id="custom-tooltip"></div>
         <!-- Drawing Canvas & Toolbar -->
         <div class="toolbar">
             <div id="tools-wrapper">
@@ -293,7 +322,7 @@
         <canvas id="drawing-canvas"></canvas>
         
         <!-- Slides Container -->
-        <div id="slides-container">
+        <div id="slides-container" class="flex-grow">
             
             <!-- Slide 1: Title -->
             <div class="slide active justify-center items-center text-center p-8">
@@ -302,7 +331,7 @@
                     <p class="text-2xl md:text-3xl font-semibold text-sky-600">THE Impact Rankings 2025</p>
                     <p class="mt-8 text-lg text-slate-500 max-w-3xl mx-auto">Sebuah analisis mendalam mengenai dampak Universitas di Indonesia terhadap Tujuan Pembangunan Berkelanjutan (SDGs) global.</p>
                 </div>
-               <div class="slide-footer">
+                <div class="slide-footer">
                     <div class="w-full h-full flex justify-around items-center gap-x-2 sm:gap-x-4 px-2">
                         <img src="img/logo/THE Impact Rankings 2025_RGB_COL.png" alt="THE Logo" class="sponsor-img" style="max-height: 25px;">
                         <img src="img/logo/SDG.png" alt="SDG Goals Logo" class="sponsor-img" style="max-height: 40px;">
@@ -315,6 +344,271 @@
                 </div>
             </div>
 
+        <!-- Slide 2 USK Ranking Progress SDG 2023 Sampai 2024 -->
+             <div class="slide p-4">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 text-slate-800">Perkembangan Peringkat USK (2023-2025)</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse alternating-rows">
+                        <thead class="table-header usk-table-header">
+                            <tr>
+                                <th class="text-left w-2/5">Kategori Peringkat</th>
+                                <th class="w-1/4">2023</th>
+                                <th class="w-1/4">2024</th>
+                                <th class="w-1/4">2025</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Overall THE Impact Rankings -->
+                            <tr class="font-semibold bg-slate-100">
+                                <td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/THE/logo.png" class="w-10 h-10"><span>THE: Impact Rankings (Keseluruhan)</span></div></td>
+                                <td><div class="inline-flex items-center gap-2"><span>601-800</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td>
+                                <td><div class="inline-flex items-center gap-2"><span>801-1000</span><svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></td>
+                                <td><div class="inline-flex items-center gap-2 font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full"><span>601-800</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td>
+                            </tr>
+                            <!-- SDG Rankings -->
+                            <tr><td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/sgd/E-WEB-Goal-01.png" class="w-10 h-10 rounded-md"><span>SDGs 1: No Poverty</span></div></td><td><div class="inline-flex items-center gap-2"><span>301-400</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td><td><div class="inline-flex items-center gap-2"><span>401-600</span><svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></td><td><div class="inline-flex items-center gap-2 font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full"><span>101-200</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td></tr>
+                            <tr><td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/sgd/E-WEB-Goal-02.png" class="w-10 h-10 rounded-md"><span>SDGs 2: Zero Hunger</span></div></td><td>N/A</td><td>N/A</td><td><div class="inline-flex items-center gap-2 font-bold text-yellow-600 bg-yellow-100 px-3 py-1 rounded-full"><span>201-300</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td></tr>
+                            <tr><td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/sgd/E-WEB-Goal-03.png" class="w-10 h-10 rounded-md"><span>SDGs 3: Good Health and Wellbeing</span></div></td><td><div class="inline-flex items-center gap-2"><span>601-800</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td><td><div class="inline-flex items-center gap-2"><span>1000+</span><svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></td><td><div class="inline-flex items-center gap-2 font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full"><span>301-400</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td></tr>
+                            <tr><td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/sgd/E-WEB-Goal-04.png" class="w-10 h-10 rounded-md"><span>SDGs 4: Quality Education</span></div></td><td><div class="inline-flex items-center gap-2"><span>201-300</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td><td><div class="inline-flex items-center gap-2"><span>101-200</span><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td><td><div class="inline-flex items-center gap-2 font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full"><span>66</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td></tr>
+                            <tr><td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/sgd/E-WEB-Goal-05.png" class="w-10 h-10 rounded-md"><span>SDGs 5: Gender Equality</span></div></td><td>N/A</td><td>N/A</td><td><div class="inline-flex items-center gap-2 font-bold text-yellow-600 bg-yellow-100 px-3 py-1 rounded-full"><span>301-400</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td></tr>
+                            <tr><td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/sgd/E-WEB-Goal-07.png" class="w-10 h-10 rounded-md"><span>SDGs 7: Affordable and Clean Energy</span></div></td><td>N/A</td><td>N/A</td><td><div class="inline-flex items-center gap-2 font-bold text-yellow-600 bg-yellow-100 px-3 py-1 rounded-full"><span>301-400</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td></tr>
+                            <tr><td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/sgd/E-WEB-Goal-09.png" class="w-10 h-10 rounded-md"><span>SDGs 9: Industry, Innovation and Infrastructure</span></div></td><td><div class="inline-flex items-center gap-2"><span>401-600</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td><td><div class="inline-flex items-center gap-2"><span>401-600</span><svg class="w-4 h-4 text-blue-800" fill="currentColor" viewBox="0 0 20 20"><path d="M4 10a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1z"></path></svg></div></td><td><div class="inline-flex items-center gap-2 font-bold text-gray-600 bg-gray-200 px-3 py-1 rounded-full"><span>401-600</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M4 10a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1z"></path></svg></div></td></tr>
+                            <tr><td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/sgd/E-WEB-Goal-10.png" class="w-10 h-10 rounded-md"><span>SDGs 10: Reduced Inequalities</span></div></td><td>N/A</td><td>N/A</td><td><div class="inline-flex items-center gap-2 font-bold text-yellow-600 bg-yellow-100 px-3 py-1 rounded-full"><span>601-800</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td></tr>
+                            <tr><td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/sgd/E-WEB-Goal-11.png" class="w-10 h-10 rounded-md"><span>SDGs 11: Sustainable Cities and Communities</span></div></td><td><div class="inline-flex items-center gap-2"><span>601-800</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td><td><div class="inline-flex items-center gap-2"><span>601-800</span><svg class="w-4 h-4 text-blue-800" fill="currentColor" viewBox="0 0 20 20"><path d="M4 10a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1z"></path></svg></div></td><td><div class="inline-flex items-center gap-2 font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full"><span>301-400</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td></tr>
+                            <tr><td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/sgd/E-WEB-Goal-13.png" class="w-10 h-10 rounded-md"><span>SDGs 13: Climate Action</span></div></td><td><div class="inline-flex items-center gap-2"><span>201-300</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td><td><div class="inline-flex items-center gap-2"><span>401-600</span><svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></td><td><div class="inline-flex items-center gap-2 font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full"><span>101-200</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td></tr>
+                            <tr><td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/sgd/E-WEB-Goal-14.png" class="w-10 h-10 rounded-md"><span>SDGs 14: Life Below Water</span></div></td><td><div class="inline-flex items-center gap-2"><span>201-300</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td><td><div class="inline-flex items-center gap-2"><span>201-300</span><svg class="w-4 h-4 text-blue-800" fill="currentColor" viewBox="0 0 20 20"><path d="M4 10a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1z"></path></svg></div></td><td><div class="inline-flex items-center gap-2 font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full"><span>79</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td></tr>
+                            <tr><td class="text-left"><div class="flex items-center gap-3"><img src="img/logo/sgd/E-WEB-Goal-17.png" class="w-10 h-10 rounded-md"><span>SDGs 17: Partnership for the Goals</span></div></td><td><div class="inline-flex items-center gap-2"><span>101-200</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td><td><div class="inline-flex items-center gap-2"><span>801-1000</span><svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></td><td><div class="inline-flex items-center gap-2 font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full"><span>101-200</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Slide Kedua -->
+            <div class="slide p-4 justify-center">
+                 <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Peta Kekuatan SDG Universitas Syiah Kuala</h2>
+                 <p class="text-center text-slate-500 mb-6">Visualisasi Peringkat Nasional USK di setiap Kategori SDG.</p>
+                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-center text-sm max-w-5xl mx-auto">
+                    <!-- Cards with new design -->
+                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-amber-300 border border-amber-400">
+                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-amber-900 text-lg">SDG 4: Quality Education</p></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#4</p></div>
+                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-2xl font-extrabold leading-none">=66</p></div>
+                        </div>
+                    </div>
+                     <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-amber-300 border border-amber-400">
+                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-amber-900 text-lg">SDG 17: Partnership for the Goals</p></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#5</p></div>
+                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">101-200</p></div>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
+                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 14: Life Below Water</p></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#6</p></div>
+                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-2xl font-extrabold leading-none">79</p></div>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
+                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 1: No Poverty</p></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#7</p></div>
+                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">101-200</p></div>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
+                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 13: Climate Action</p></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#7</p></div>
+                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">101-200</p></div>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
+                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 3: Good Health & Well-being</p></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#9</p></div>
+                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">301-400</p></div>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-emerald-300 border border-emerald-400">
+                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-emerald-900 text-lg">SDG 2: Zero Hunger</p></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#10</p></div>
+                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">201-300</p></div>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
+                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 5: Gender Equality</p></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#11</p></div>
+                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">301-400</p></div>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
+                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 7: Affordable & Clean Energy</p></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#11</p></div>
+                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">301-400</p></div>
+                        </div>
+                    </div>
+                     <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
+                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 9: Industry, Innovation & Infrastructure</p></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#11</p></div>
+                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">401-600</p></div>
+                        </div>
+                    </div>
+                     <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
+                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 11: Sustainable Cities & Communities</p></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#11</p></div>
+                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">301-400</p></div>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-lg shadow-lg h-40 flex flex-col bg-slate-200 border border-slate-300">
+                        <div class="p-3 text-center flex-grow flex items-center justify-center"><p class="font-bold text-slate-800 text-lg">SDG 10: Reduced Inequalities</p></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end text-white">
+                            <div class="text-left"><p class="text-xs font-semibold opacity-90">NASIONAL</p><p class="text-2xl font-extrabold leading-none">#12</p></div>
+                            <div class="text-right"><p class="text-xs font-semibold opacity-90">DUNIA</p><p class="text-lg font-extrabold leading-none">601-800</p></div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+
+            <!-- Slide 3: QS WUR Ranking Progress -->
+            <div class="slide p-4 flex-col justify-center">
+                <h2 class="text-3xl font-bold text-center mb-6" style="color: #002D62;">QS World University Ranking (QS WUR)</h2>
+                <div class="overflow-x-auto shadow-lg rounded-lg">
+                    <table class="w-full border-collapse">
+                        <tbody>
+                            <tr style="background-color: #2f5597;">
+                                <td colspan="5" class="text-2xl font-bold py-3 text-yellow-300">QS World University Ranking (QS WUR) USK</td>
+                            </tr>
+                            <tr class="bg-slate-100 text-slate-600 text-sm font-semibold">
+                                <td class="w-1/5 py-2">QS WUR 2022<br><span class="font-normal">(dipublikasikan 2021)</span></td>
+                                <td class="w-1/5 py-2">QS WUR 2023<br><span class="font-normal">(dipublikasikan 2022)</span></td>
+                                <td class="w-1/5 py-2">QS WUR 2024<br><span class="font-normal">(dipublikasikan 2023)</span></td>
+                                <td class="w-1/5 py-2">QS WUR 2025<br><span class="font-normal">(dipublikasikan 2024)</span></td>
+                                <td class="w-1/5 py-2">QS WUR 2026<br><span class="font-normal">(dipublikasikan 2025)</span></td>
+                            </tr>
+                            <tr class="bg-white text-center text-lg font-medium">
+                                <td>Not Ranked</td>
+                                <td>Not Ranked</td>
+                                <td>Not Ranked</td>
+                                <td>Not Ranked</td>
+                                <td>1401+</td>
+                            </tr>
+                            
+                            <tr style="background-color: #ddebf7;">
+                                <td colspan="5" class="text-2xl font-bold py-3 text-black">QS World University Rankings: Sustainability</td>
+                            </tr>
+                             <tr class="bg-white text-center text-lg font-medium">
+                                <td>Not ranked</td>
+                                <td>Not ranked</td>
+                                <td>Not Ranked</td>
+                                <td>1101-1120</td>
+                                <td>&nbsp;</td>
+                            </tr>
+        
+                            <tr style="background-color: #ddebf7;">
+                                <td colspan="5" class="text-2xl font-bold py-3 text-black">QS WUR: Asia University Ranking</td>
+                            </tr>
+                             <tr class="bg-white text-center text-lg font-medium">
+                                <td>601-650</td>
+                                <td>651-700</td>
+                                <td>701-750</td>
+                                <td>621-640</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Slide ke 4 Ui dan Webometrics -->
+            <div class="slide p-4 flex-col justify-center">
+                <div class="max-w-4xl mx-auto w-full space-y-8">
+                    <!-- UI GreenMetric Table -->
+                    <div class="flex flex-col">
+                        <h2 class="text-3xl font-bold text-center mb-4" style="color: #4D8235;">UI GreenMetric</h2>
+                        <div class="overflow-x-auto shadow-lg rounded-lg">
+                            <table class="w-full border-collapse">
+                                <thead class="table-header" style="background-color: #4D8235;">
+                                    <tr>
+                                        <th class="w-1/4 text-left">Kriteria</th>
+                                        <th class="w-1/4">2022</th>
+                                        <th class="w-1/4">2023</th>
+                                        <th class="w-1/4">2024</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white">
+                                    <tr class="font-semibold bg-slate-50">
+                                        <td class="text-left">World Rank</td>
+                                        <td><div class="inline-flex items-center justify-center gap-2"><span>376</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td>
+                                        <td><div class="inline-flex items-center justify-center gap-2"><span>29</span><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td>
+                                        <td><div class="inline-flex items-center justify-center gap-2"><span>193</span><svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></td>
+                                    </tr>
+                                    <tr class="font-semibold">
+                                        <td class="text-left">Total Score</td>
+                                        <td><div class="inline-flex items-center justify-center gap-2"><span>6660</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td>
+                                        <td><div class="inline-flex items-center justify-center gap-2"><span>7625</span><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td>
+                                        <td><div class="inline-flex items-center justify-center gap-2"><span>8150</span><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td>
+                                    </tr>
+                                    <tr><td class="text-left pl-4">Setting & Infrastructure</td><td>1200</td><td>1325</td><td>1150</td></tr>
+                                    <tr><td class="text-left pl-4">Energy & Climate Change</td><td>1160</td><td>1425</td><td>1625</td></tr>
+                                    <tr><td class="text-left pl-4">Waste</td><td>900</td><td>1350</td><td>1350</td></tr>
+                                    <tr><td class="text-left pl-4">Water</td><td>650</td><td>750</td><td>750</td></tr>
+                                    <tr><td class="text-left pl-4">Transportation</td><td>1400</td><td>1175</td><td>1475</td></tr>
+                                    <tr><td class="text-left pl-4">Education & Research</td><td>1350</td><td>1600</td><td>1800</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Webometrics Table -->
+                    <div class="flex flex-col">
+                        <h2 class="text-3xl font-bold text-center mb-4" style="color: #00427D;">Webometrics</h2>
+                        <div class="overflow-x-auto shadow-lg rounded-lg">
+                            <table class="w-full border-collapse">
+                                <thead class="table-header" style="background-color: #00427D;">
+                                    <tr>
+                                        <th class="w-1/4 text-left">Peringkat</th>
+                                        <th class="w-1/4">2023</th>
+                                        <th class="w-1/4">2024</th>
+                                        <th class="w-1/4">2025</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white">
+                                    <tr>
+                                        <td class="text-left font-semibold">Nasional</td>
+                                        <td><div class="inline-flex items-center justify-center gap-2"><span>7</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td>
+                                        <td><div class="inline-flex items-center justify-center gap-2"><span>13</span><svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></td>
+                                        <td><div class="inline-flex items-center justify-center gap-2"><span>19</span><svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></td>
+                                    </tr>
+                                    <tr class="bg-slate-50">
+                                        <td class="text-left font-semibold">Dunia</td>
+                                        <td><div class="inline-flex items-center justify-center gap-2"><span>1158</span><svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></div></td>
+                                        <td><div class="inline-flex items-center justify-center gap-2"><span>1366</span><svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></td>
+                                        <td><div class="inline-flex items-center justify-center gap-2"><span>1039</span><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Slide 2: Overall Ranking -->
             <div class="slide p-4">
                 <h2 class="text-3xl font-bold text-center mb-6 text-slate-800">Top 20 Universitas (Peringkat Keseluruhan)</h2>
@@ -322,32 +616,33 @@
                     <table class="w-full border-collapse alternating-rows">
                         <thead class="table-header">
                             <tr>
+                                <th>Nomor</th>
+                                <th>Universitas</th>
                                 <th>Peringkat Nasional</th>
-                                <th class="text-left">Universitas</th>
                                 <th>Peringkat Global</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>1</td><td class="text-left font-semibold">Universitas Airlangga (UNAIR)</td><td class="font-bold text-sky-600">=9</td></tr>
-                            <tr><td>2</td><td class="text-left font-semibold">Universitas Indonesia (UI)</td><td class="font-bold text-sky-600">30</td></tr>
-                            <tr><td>3</td><td class="text-left font-semibold">Universitas Gadjah Mada (UGM)</td><td class="font-bold text-sky-600">=82</td></tr>
-                            <tr><td>4</td><td class="text-left">IPB University</td><td>101-200</td></tr>
-                            <tr><td>5</td><td class="text-left">Institut Teknologi Bandung (ITB)</td><td>201-300</td></tr>
-                            <tr><td>6</td><td class="text-left">Institut Teknologi Sepuluh Nopember (ITS)</td><td>201-300</td></tr>
-                            <tr><td>7</td><td class="text-left">Universitas Padjadjaran (UNPAD)</td><td>201-300</td></tr>
-                            <tr><td>8</td><td class="text-left">Bina Nusantara University (BINUS)</td><td>301-400</td></tr>
-                            <tr><td>9</td><td class="text-left">Universitas Diponegoro (UNDIP)</td><td>301-400</td></tr>
-                            <tr><td>10</td><td class="text-left">Universitas Sebelas Maret (UNS)</td><td>301-400</td></tr>
-                            <tr><td>11</td><td class="text-left">Universitas Hasanuddin (UNHAS)</td><td>401-600</td></tr>
-                            <tr><td>12</td><td class="text-left">Telkom University</td><td>401-600</td></tr>
-                            <tr><td>13</td><td class="text-left">Universitas Pelita Harapan (UPH)</td><td>401-600</td></tr>
-                            <tr><td>14</td><td class="text-left">Universitas Brawijaya (UB)</td><td>401-600</td></tr>
-                            <tr><td>15</td><td class="text-left">Universitas Negeri Malang (UM)</td><td>601-800</td></tr>
-                            <tr><td>16</td><td class="text-left">Universitas Andalas (UNAND)</td><td>601-800</td></tr>
-                            <tr><td>17</td><td class="text-left">Universitas Muhammadiyah Yogyakarta (UMY)</td><td>601-800</td></tr>
-                            <tr><td>18</td><td class="text-left">Universitas Negeri Surabaya (UNESA)</td><td>601-800</td></tr>
-                            <tr><td>19</td><td class="text-left">Universitas Sriwijaya (UNSRI)</td><td>601-800</td></tr>
-                            <tr class="highlight-row"><td>20</td><td class="text-left">Universitas Syiah Kuala (USK)</td><td>601-800</td></tr>
+                            <tr><td>1</td><td class="text-left font-semibold">Universitas Airlangga (UNAIR)</td><td>#1</td><td class="font-bold text-sky-600">=9</td></tr>
+                            <tr><td>2</td><td class="text-left font-semibold">Universitas Indonesia (UI)</td><td>#2</td><td class="font-bold text-sky-600">30</td></tr>
+                            <tr><td>3</td><td class="text-left font-semibold">Universitas Gadjah Mada (UGM)</td><td>#3</td><td class="font-bold text-sky-600">=82</td></tr>
+                            <tr><td>4</td><td class="text-left">IPB University</td><td>#4</td><td>101-200</td></tr>
+                            <tr><td>5</td><td class="text-left">Institut Teknologi Bandung (ITB)</td><td>#5</td><td>201-300</td></tr>
+                            <tr><td>6</td><td class="text-left">Institut Teknologi Sepuluh Nopember (ITS)</td><td>#5</td><td>201-300</td></tr>
+                            <tr><td>7</td><td class="text-left">Universitas Padjadjaran (UNPAD)</td><td>#5</td><td>201-300</td></tr>
+                            <tr><td>8</td><td class="text-left">Bina Nusantara University (BINUS)</td><td>#6</td><td>301-400</td></tr>
+                            <tr><td>9</td><td class="text-left">Universitas Diponegoro (UNDIP)</td><td>#6</td><td>301-400</td></tr>
+                            <tr><td>10</td><td class="text-left">Universitas Sebelas Maret (UNS)</td><td>#6</td><td>301-400</td></tr>
+                            <tr><td>11</td><td class="text-left">Universitas Hasanuddin (UNHAS)</td><td>#7</td><td>401-600</td></tr>
+                            <tr><td>12</td><td class="text-left">Telkom University</td><td>#7</td><td>401-600</td></tr>
+                            <tr><td>13</td><td class="text-left">Universitas Pelita Harapan (UPH)</td><td>#7</td><td>401-600</td></tr>
+                            <tr><td>14</td><td class="text-left">Universitas Brawijaya (UB)</td><td>#7</td><td>401-600</td></tr>
+                            <tr><td>15</td><td class="text-left">Universitas Negeri Malang (UM)</td><td>#8</td><td>601-800</td></tr>
+                            <tr><td>16</td><td class="text-left">Universitas Andalas (UNAND)</td><td>#8</td><td>601-800</td></tr>
+                            <tr><td>17</td><td class="text-left">Universitas Muhammadiyah Yogyakarta (UMY)</td><td>#8</td><td>601-800</td></tr>
+                            <tr><td>18</td><td class="text-left">Universitas Negeri Surabaya (UNESA)</td><td>#8</td><td>601-800</td></tr>
+                            <tr><td>19</td><td class="text-left">Universitas Sriwijaya (UNSRI)</td><td>#8</td><td>601-800</td></tr>
+                            <tr class="highlight-row"><td>20</td><td class="text-left">Universitas Syiah Kuala (USK)</td><td>#8</td><td>601-800</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -492,131 +787,11 @@
                      <li class="flex items-start"><span class="text-yellow-500 text-2xl mr-4">&#9733;</span><div><span class="font-semibold text-slate-800">Komitmen Kemitraan yang Kuat:</span> Peringkat tinggi dalam <strong>SDG 17: Kemitraan untuk Tujuan</strong> (peringkat #5 Nasional) menunjukkan kemampuan USK dalam menjalin kolaborasi untuk mencapai tujuan keberlanjutan.</div></li>
                 </ul>
             </div>
-            <div class="slide p-4 justify-center">
-                 <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Peta Kekuatan SDG Universitas Syiah Kuala</h2>
-                 <p class="text-center text-slate-500 mb-6">Visualisasi Peringkat Nasional USK di setiap Kategori SDG.</p>
-                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 text-center text-sm max-w-5xl mx-auto">
-                    <!-- Gold Tier -->
-                    <div class="p-3 rounded-lg bg-amber-300 border border-amber-400 shadow-md">
-                        <p class="font-bold text-amber-800">SDG 4: Education</p>
-                        <p class="text-3xl font-extrabold text-amber-900 my-1">#4</p>
-                        <p class="text-xs text-amber-800">Nasional</p>
-                    </div>
-                    <div class="p-3 rounded-lg bg-amber-300 border border-amber-400 shadow-md">
-                        <p class="font-bold text-amber-800">SDG 17: Partnerships</p>
-                        <p class="text-3xl font-extrabold text-amber-900 my-1">#5</p>
-                        <p class="text-xs text-amber-800">Nasional</p>
-                    </div>
-                    <!-- Green Tier -->
-                     <div class="p-3 rounded-lg bg-emerald-300 border border-emerald-400 shadow-md">
-                        <p class="font-bold text-emerald-800">SDG 14: Life Below Water</p>
-                        <p class="text-3xl font-extrabold text-emerald-900 my-1">#6</p>
-                        <p class="text-xs text-emerald-800">Nasional</p>
-                    </div>
-                     <div class="p-3 rounded-lg bg-emerald-300 border border-emerald-400 shadow-md">
-                        <p class="font-bold text-emerald-800">SDG 1: No Poverty</p>
-                        <p class="text-3xl font-extrabold text-emerald-900 my-1">#7</p>
-                        <p class="text-xs text-emerald-800">Nasional</p>
-                    </div>
-                     <div class="p-3 rounded-lg bg-emerald-300 border border-emerald-400 shadow-md">
-                        <p class="font-bold text-emerald-800">SDG 13: Climate Action</p>
-                        <p class="text-3xl font-extrabold text-emerald-900 my-1">#7</p>
-                        <p class="text-xs text-emerald-800">Nasional</p>
-                    </div>
-                     <div class="p-3 rounded-lg bg-emerald-300 border border-emerald-400 shadow-md">
-                        <p class="font-bold text-emerald-800">SDG 3: Health</p>
-                        <p class="text-3xl font-extrabold text-emerald-900 my-1">#9</p>
-                        <p class="text-xs text-emerald-800">Nasional</p>
-                    </div>
-                     <div class="p-3 rounded-lg bg-emerald-300 border border-emerald-400 shadow-md">
-                        <p class="font-bold text-emerald-800">SDG 2: Zero Hunger</p>
-                        <p class="text-3xl font-extrabold text-emerald-900 my-1">#10</p>
-                        <p class="text-xs text-emerald-800">Nasional</p>
-                    </div>
-                    <!-- Grey Tier -->
-                    <div class="p-3 rounded-lg bg-slate-200 border border-slate-300 shadow-sm">
-                        <p class="font-semibold text-slate-600">SDG 5: Gender Equality</p>
-                        <p class="text-3xl font-bold text-slate-700 my-1">#11</p>
-                        <p class="text-xs text-slate-500">Nasional</p>
-                    </div>
-                    <div class="p-3 rounded-lg bg-slate-200 border border-slate-300 shadow-sm">
-                        <p class="font-semibold text-slate-600">SDG 7: Clean Energy</p>
-                        <p class="text-3xl font-bold text-slate-700 my-1">#11</p>
-                        <p class="text-xs text-slate-500">Nasional</p>
-                    </div>
-                    <div class="p-3 rounded-lg bg-slate-200 border border-slate-300 shadow-sm">
-                        <p class="font-semibold text-slate-600">SDG 9: Infrastructure</p>
-                        <p class="text-3xl font-bold text-slate-700 my-1">#11</p>
-                        <p class="text-xs text-slate-500">Nasional</p>
-                    </div>
-                    <div class="p-3 rounded-lg bg-slate-200 border border-slate-300 shadow-sm">
-                        <p class="font-semibold text-slate-600">SDG 11: Cities</p>
-                        <p class="text-3xl font-bold text-slate-700 my-1">#11</p>
-                        <p class="text-xs text-slate-500">Nasional</p>
-                    </div>
-                    <div class="p-3 rounded-lg bg-slate-200 border border-slate-300 shadow-sm">
-                        <p class="font-semibold text-slate-600">SDG 10: Inequalities</p>
-                        <p class="text-3xl font-bold text-slate-700 my-1">#12</p>
-                        <p class="text-xs text-slate-500">Nasional</p>
-                    </div>
-                 </div>
-            </div>
-            <div class="slide p-4">
-                <div class="text-center mb-8">
-                    <h1 class="text-3xl md:text-4xl font-bold text-slate-800 mb-2">Profil Peringkat Universitas Syiah Kuala (USK)</h1>
-                    <h2 class="text-2xl font-semibold" style="color: #006837;">THE Impact Rankings 2025</h2>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-                    <div class="lg:col-span-3">
-                        <h3 class="text-xl font-bold text-center mb-4 text-slate-700">Peringkat per Kategori SDG</h3>
-                        <div class="overflow-x-auto rounded-lg border">
-                            <table class="w-full border-collapse alternating-rows">
-                                <thead class="table-header usk-table-header">
-                                    <tr>
-                                        <th class="usk-sdg-col">Kategori SDG</th>
-                                        <th>Peringkat Global</th>
-                                        <th>Peringkat Nasional</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td class="usk-sdg-col">SDG 1: No Poverty</td><td class="usk-rank-col">101-200</td><td>#7</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 2: Zero Hunger</td><td class="usk-rank-col">201-300</td><td>#10</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 3: Good Health & Well-being</td><td class="usk-rank-col">301-400</td><td>#9</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 4: Quality Education</td><td class="usk-rank-col">=66</td><td class="usk-highlight-rank">#4</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 5: Gender Equality</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
-                                    <tr><td class="usk-sdg-col">SDG 6: Clean Water & Sanitation</td><td class="usk-rank-col">-</td><td>-</td></tr>
-                                    <tr><td class="sdg-col">SDG 7: Affordable & Clean Energy</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
-                                    <tr><td class="sdg-col">SDG 8: Decent Work & Economic Growth</td><td class="usk-rank-col">-</td><td>-</td></tr>
-                                    <tr><td class="sdg-col">SDG 9: Industry, Innovation & Infrastructure</td><td class="usk-rank-col">401-600</td><td>#11</td></tr>
-                                    <tr><td class="sdg-col">SDG 10: Reduced Inequalities</td><td class="usk-rank-col">601-800</td><td>#12</td></tr>
-                                    <tr><td class="sdg-col">SDG 11: Sustainable Cities & Communities</td><td class="usk-rank-col">301-400</td><td>#11</td></tr>
-                                    <tr><td class="sdg-col">SDG 12: Responsible Consumption & Production</td><td class="usk-rank-col">-</td><td>-</td></tr>
-                                    <tr><td class="sdg-col">SDG 13: Climate Action</td><td class="usk-rank-col">101-200</td><td>#7</td></tr>
-                                    <tr><td class="sdg-col">SDG 14: Life below Water</td><td class="usk-rank-col">79</td><td>#6</td></tr>
-                                    <tr><td class="sdg-col">SDG 15: Life on Land</td><td class="usk-rank-col">-</td><td>-</td></tr>
-                                    <tr><td class="sdg-col">SDG 16: Peace, Justice & Strong Institutions</td><td class="usk-rank-col">-</td><td>-</td></tr>
-                                    <tr><td class="sdg-col">SDG 17: Partnership for the Goals</td><td class="usk-rank-col">101-200</td><td class="usk-highlight-rank">#5</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-2 bg-slate-50 p-6 rounded-lg border border-slate-200">
-                        <h3 class="text-xl font-bold text-slate-700 mb-4">Analisis Statistik</h3>
-                        <div class="space-y-4 text-slate-600">
-                            <div><p class="font-semibold text-slate-500">Peringkat Nasional (Keseluruhan):</p><p class="text-3xl font-bold text-slate-800">#20</p></div>
-                            <div><p class="font-semibold text-slate-500">Peringkat Global (Keseluruhan):</p><p class="text-3xl font-bold text-slate-800">601-800</p></div>
-                            <div class="pt-2"><p class="font-semibold text-slate-500">Kategori SDG Terbaik:</p><p class="text-2xl font-bold text-amber-600">SDG 4: Education</p><p class="text-sm">(Peringkat #4 Nasional, =66 Global)</p></div>
-                            <div><p class="font-semibold text-slate-500">Area Unggulan Lainnya:</p><ul class="list-disc list-inside mt-1"><li>SDG 17: Partnerships (#5 Nasional)</li><li>SDG 14: Life Below Water (#6 Nasional)</li><li>SDG 1 & 13 (#7 Nasional)</li></ul></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+            
         </div>
 
         <!-- Navigation -->
-        <div class="flex justify-between items-center mt-8 pt-4 border-t border-slate-200">
+        <div class="flex justify-center items-center gap-x-8 mt-8 pt-4 border-t border-slate-200">
             <button id="prevBtn" class="nav-btn">Previous</button>
             <select id="slide-jumper" title="Go to slide"></select>
             <button id="nextBtn" class="nav-btn">Next</button>
@@ -653,6 +828,7 @@
             const chevronRight = document.getElementById('chevron-right');
             const chevronLeft = document.getElementById('chevron-left');
             const colorPalette = document.getElementById('color-palette');
+            const customTooltip = document.getElementById('custom-tooltip');
 
             // --- State Variables ---
             let currentSlide = 0;
@@ -787,6 +963,22 @@
                 chevronRight.classList.toggle('hidden', !isHidden);
                 chevronLeft.classList.toggle('hidden', isHidden);
                 if (isHidden) setActiveTool('cursor');
+            });
+
+            document.querySelectorAll('.tool-btn').forEach(btn => {
+                btn.addEventListener('mouseenter', (e) => {
+                    const title = e.currentTarget.getAttribute('title');
+                    if (title) {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        customTooltip.textContent = title;
+                        customTooltip.style.opacity = '1';
+                        customTooltip.style.top = `${rect.top - customTooltip.offsetHeight - 8}px`;
+                        customTooltip.style.left = `${rect.left + rect.width / 2 - customTooltip.offsetWidth / 2}px`;
+                    }
+                });
+                btn.addEventListener('mouseleave', () => {
+                    customTooltip.style.opacity = '0';
+                });
             });
 
             document.getElementById('cursor-tool').addEventListener('click', () => setActiveTool('cursor'));
